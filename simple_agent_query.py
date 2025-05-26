@@ -15,7 +15,7 @@ def parse_skills(response: str) -> dict[str, str]:
     matches = skills_pattern.findall(response)
     return {skill: arg for skill, arg in matches}
     
-def skills_query(agent: SimpleAgent, question: str, max_turns: int = 10) -> Union[str, Dict[str, str]]:
+def skills_query(agent: SimpleAgent, question: str, max_turns: int = 20) -> Union[str, Dict[str, str]]:
     next_prompt = question
 
     for _ in range(max_turns):
