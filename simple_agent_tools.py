@@ -1,3 +1,5 @@
+from typing import Callable
+
 def calculate(input: str) -> str:
     return str(eval(input))
 
