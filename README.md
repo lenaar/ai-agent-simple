@@ -16,8 +16,8 @@ A simple example of an AI agent that can understand natural language queries abo
 git clone https://github.com/lenaar/ai-agent-simple.git
 cd ai-agent-simple
 
-# Install dependencies (if any)
-pip install pytest
+# Install all dependencies
+pip install -r requirements.txt
 ```
 
 ## Usage
