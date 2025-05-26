@@ -1,7 +1,7 @@
-def calculate(input):
-    return eval(input)
+def calculate(input: str) -> str:
+    return str(eval(input))
 
-def planet_mass(planet):
+def planet_mass(planet: str) -> str:
     masses = {
         "Earth": 5.972,
         "Mars": 6.4171,
@@ -15,7 +15,7 @@ def planet_mass(planet):
         return f"Unknown planet: {planet}"
     return f"{planet} has a mass of {mass} x 10^24 kg"
 
-known_skills = {
+known_skills: dict[str, Callable[[str], str]] = {
     "calculate": calculate,
     "planet_mass": planet_mass
 }
