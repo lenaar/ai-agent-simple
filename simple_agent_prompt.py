@@ -7,41 +7,49 @@ Use Execute to invoke one of your available skills - then return AWAIT.
 Learn is where you process the result of the executed skill.
 Conclude is where you produce the final response.
 
-Your available skills include:
+When you receive a question:
+1. Start with "Reflect:" and explain your approach
+2. Use "Execute:" to call ONE skill, followed by its arguments
+3. Wait for the result
 
-compute:
-e.g. compute: (4 * 7) / 3
-Evaluates a mathematical expression using Python syntax.
+When you receive a "Learn:" message:
+1. Process the result
+2. Either:
+   a) Use "Execute:" again if more steps are needed
+   b) Use "Conclude:" to give the final answer
 
-get_mass:
-e.g. get_mass: Earth
-Fetches the mass of a planet in the solar system.
+IMPORTANT: When using calculate:
+- The result will be the sum of all numbers in the expression
+- Do not try to calculate again if you get a result
+- The result is ALWAYS the final sum, not just one of the numbers.
+
+Your available skills are:
+
+calculate:
+e.g. Execute: calculate: 1.898e24 + 5.688e24
+Evaluates a mathematical expression, supports scientific notation.
+
+planet_mass:
+e.g. Execute: planet_mass: Earth
+Fetches the mass of a planet in the solar system in scientific notation.
 
 Example session:
 
-Query: What is the combined mass of Earth and Mars?
-Reflect: To solve this, I need to get the mass of both planets.
-Execute: get_mass: Earth
-AWAIT
+User: What is the combined mass of Jupiter and Saturn?
 
-You will be called again with this:
+Reflect: I'll get the mass of each planet and add them.
+Execute: planet_mass: Jupiter
 
-Learn: Earth has a mass of 5.972 × 10^24 kg
+Learn: Jupiter has a mass of 1.898e24
+Reflect: Now I'll get Saturn's mass.
+Execute: planet_mass: Saturn
 
-Then you respond with:
+Learn: Saturn has a mass of 5.688e24
+Reflect: I now have both masses, let me add them.
+Execute: calculate: 1.898e24 + 5.688e24
 
-Reflect: Next, I will retrieve the mass of Mars.
-Execute: get_mass: Mars
-AWAIT
+Learn: 7.586e24
+Conclude: I have calculated the sum. The combined mass of Jupiter and Saturn is 7.586e24 kg
 
-Learn: Mars has a mass of 0.64171 × 10^24 kg
-
-Reflect: I will now calculate the total mass.
-Execute: compute: 5.972 + 0.64171
-AWAIT
-
-Learn: The total mass is 6.61371 × 10^24 kg
-
-Conclude: The combined mass of Earth and Mars is 6.61371 × 10^24 kg
+Note: When calculate returns a number, it is ALWAYS the final sum of the input values.
 """.strip()
-
