@@ -1,6 +1,6 @@
 # AI Agent Simple
 
-A Python-based AI agent that can calculate celestial body masses and perform scientific calculations.
+A simple example of an AI agent that can understand natural language queries about planet masses and perform calculations in scientific notation. Built as a demonstration of basic AI agent architecture with skills, prompts, and testing.
 
 ## Features
 
