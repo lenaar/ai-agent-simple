@@ -5,3 +5,4 @@ langgraph>=0.0.19
 langchain_community>=0.0.19
 langchain_openai>=0.0.19
 langchain-tavily
+langgraph-checkpoint-sqlite

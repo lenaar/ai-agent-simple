@@ -31,19 +31,21 @@ def simple_agent_langgraph(state: MessagesState):
     print(state["messages"])
 
     return {"messages": [model_with_tools.invoke(state["messages"])]}
-    
 
-def build_graph_agent():
+
+def build_graph_agent(checkpointer):
     # Initialize the graph
     graph = StateGraph(MessagesState)
     graph.add_node("agent", simple_agent_langgraph)
-    
-    # Set the entry point - where the graph begins
+
+# Set the entry point - where the graph begins
     graph.set_entry_point("agent")
 
+    # add tools node
     tool_node = ToolNode(tools=tools)
     graph.add_conditional_edges("agent", tools_condition)
     graph.add_node("tools", tool_node)
-    
-    # Compile the graph
-    return graph.compile()
+
+    # STEP 5: Compile the graph
+    return graph.compile(checkpointer=checkpointer)
+

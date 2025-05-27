@@ -1,23 +1,30 @@
+from langgraph_agent import get_thread_config
 
 def skills_query_graph(agent, question):
-
-        
     # Format the question as a proper message state
     messages_state = {
-        "messages": [
-            {"role": "user", "content": question}
-        ]
+        "messages": [("user", question)]
     }
     
-    # Stream the response
-    for event in agent.stream(messages_state):
-        for value in event.values():
-            latest_message = value["messages"][-1]
-            # Handle AIMessage object
-            if hasattr(latest_message, 'content'):
-                print("Assistant:", latest_message.content)
-            else:
-                print("Assistant: no content found")
+    # Get thread configuration
+    config = get_thread_config()
     
-    # Get next question from main.py
+    try:
+        # Stream the response - the agent already has the checkpointer attached
+        events = agent.stream(messages_state, config, stream_mode="values")
+        
+        # Process each event in the stream
+        for event in events:
+            if "messages" in event:
+                latest_message = event["messages"][-1]
+                latest_message.pretty_print()
+        
+        # Get the final state
+        snapshot = agent.get_state(config)
+        if snapshot:
+            print("\nConversation state:", snapshot)
+            
+    except Exception as e:
+        print(f"Error in stream processing: {str(e)}")
+    
     return
