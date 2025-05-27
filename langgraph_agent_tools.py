@@ -1,14 +1,24 @@
-from langchain.tools import StructuredTool
-from langchain_community.tools.tavily_search import TavilySearchResults
+import os
 from typing import Optional
+from dotenv import load_dotenv
+from langchain_community.tools.tavily_search import TavilySearchResults
 
-# Initialize Tavily search with proper schema
-tool_tavily_search = StructuredTool.from_function(
-    func=TavilySearchResults(max_results=5).invoke,
-    name="tavily_search",
-    description="Search the internet for current information. Use this for questions about recent events, facts, or any information that might need up-to-date data.",
-    return_direct=True
-)
+load_dotenv()
 
-# List of available tools
+# def tool_tavily_search(query: str) -> str:
+#     """Search the internet for information about a topic. Use this when you need real-time or factual information.
+    
+#     Args:
+#         query (str): The search query to look up
+#     """
+#     tavily = TavilySearchResults(max_results=5)
+#     return tavily.invoke(query)
+
+
+tool_tavily_search = TavilySearchResults(max_results=5)
 tools = [tool_tavily_search]
+
+
+# tavily = tool_tavily_search()
+# res = tavily.invoke("What is the capital of France?")
+# print(res)
