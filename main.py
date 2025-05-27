@@ -3,14 +3,19 @@ from simple_agent_prompt import system_prompt
 from simple_agent_tools import known_skills
 from simple_agent_query import skills_query
 from simple_agent_langgraph import build_graph
-
+from simple_agebt_graph_query import skills_query_graph
 
 def main():
     agent_type = input("Enter agent type (simple_agent or simple_agent_langgraph): ")
+    
     if agent_type == "simple_agent_langgraph":
         agent = build_graph()
-        question = input("Enter your question. \n Your question: ")
-        agent.invoke({"messages": [{"role": "user", "content": question}]})
+        while True:
+            question = input("\nYour question (or 'quit' to exit): ")
+            if question.lower() in ["quit", "exit", "bye", "goodbye"]:
+                print("Goodbye!")
+                break
+            skills_query_graph(agent, question)
     else:
         agent = SimpleAgent(system_prompt=system_prompt)
         question = input("Enter your question about planets mass. Example: What is the combined mass of Jupiter and Saturn? \n Your question: ")

@@ -26,17 +26,17 @@ def simple_agent_langgraph(state: MessagesState):
     return {"messages": [openai.invoke(state["messages"])]}
 
 def build_graph():
-    graph = StateGraph(MessagesState, simple_agent_langgraph)
-    """
-    Start -> simple_agent_langgraph -> END
-    """
-    graph.add_node("simple_agent_langgraph", simple_agent_langgraph)
-    graph.set_entry_point("simple_agent_langgraph")
-    graph.set_finish_point("simple_agent_langgraph")
+    # Initialize the graph
+    graph = StateGraph(MessagesState)
     
-
+    # Add the agent node
+    graph.add_node("agent", simple_agent_langgraph)
+    
+    # Set the entry point - where the graph begins
+    graph.set_entry_point("agent")
+    
+    # Set the end point
+    graph.add_edge("agent", END)
+    
+    # Compile the graph
     return graph.compile()
-
-graph = build_graph()
-result = graph.invoke({"messages": [{"role": "user", "content": "What's 2+2?"}]})
-print(result)
