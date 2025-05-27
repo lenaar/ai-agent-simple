@@ -2,16 +2,20 @@ from simple_agent import SimpleAgent
 from simple_agent_prompt import system_prompt
 from simple_agent_tools import known_skills
 from simple_agent_query import skills_query
+from simple_agent_langgraph import build_graph
+
 
 def main():
-    # Initialize the agent with custom prompt
-    agent = SimpleAgent(system_prompt=system_prompt)
-    max_turns = int(input("Enter max turns 5-15: "))
-
-    # rewrite question to be interactive with example
-    question = input("Enter your question about planets mass. Example: What is the combined mass of Jupiter and Saturn? \n Your question: ")
-
-    skills_query(agent, question, max_turns)
+    agent_type = input("Enter agent type (simple_agent or simple_agent_langgraph): ")
+    if agent_type == "simple_agent_langgraph":
+        agent = build_graph()
+        question = input("Enter your question. \n Your question: ")
+        agent.invoke({"messages": [{"role": "user", "content": question}]})
+    else:
+        agent = SimpleAgent(system_prompt=system_prompt)
+        question = input("Enter your question about planets mass. Example: What is the combined mass of Jupiter and Saturn? \n Your question: ")
+        max_turns = int(input("Enter max turns 5-15: "))
+        skills_query(agent, question, max_turns)
 
 
 if __name__ == "__main__":
