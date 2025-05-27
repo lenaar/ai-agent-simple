@@ -50,8 +50,8 @@ graph TD
 
 ```bash
 # Clone the repository
-git clone https://github.com/lenaar/ai-agent-simple.git
-cd ai-agent-simple
+git clone https://github.com/lenaar/ai-agent-simple-and-langgraph.git
+cd ai-agent-simple-and-langgraph
 
 # Install dependencies
 pip install -r requirements.txt
