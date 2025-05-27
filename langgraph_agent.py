@@ -33,27 +33,32 @@ def simple_agent_langgraph(state: MessagesState):
 def route_tools(state: MessagesState) -> Literal["tools", END]:
     """Use the conditional node to route the messages to the correct tool. Otherwise, end the graph."""
     if isinstance(state, list):
+        print("state is a list")
         ai_message = state[-1]
     elif messages := state.get("messages", []):
+        print("state is a dict")
         ai_message = messages[-1]
     else:
         raise ValueError("No messages found in state")
     if hasattr(ai_message, "tool_calls") and len(ai_message.tool_calls) > 0:
+        print("ai_message has tool_calls")
         return "tools"
+    print("ai_message has no tool_calls")
     return END
     
 
 def build_graph_agent():
     # Initialize the graph
     graph = StateGraph(MessagesState)
-    tool_node = BasicToolNode(tools=tools)
-    graph.add_conditional_edges("agent", route_tools, {"tools": "tools", END: END})
-    graph.add_node("tools", tool_node)
-    # Add the agent node
     graph.add_node("agent", simple_agent_langgraph)
     
     # Set the entry point - where the graph begins
     graph.set_entry_point("agent")
+
+    tool_node = BasicToolNode(tools=tools)
+    graph.add_conditional_edges("agent", route_tools, {"tools": "tools", END: END})
+    graph.add_node("tools", tool_node)
+    # Add the agent node
     
     # Set the end point
     # graph.add_edge("agent", END)
