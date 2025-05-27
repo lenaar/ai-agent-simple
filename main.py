@@ -4,13 +4,13 @@ from simple_agent_tools import known_skills
 from simple_agent_query import skills_query
 from langgraph_agent import build_graph_agent
 from langgraph_agent_query import skills_query_graph
-from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph_agent_memory import get_checkpointer
 
 def main():
     agent_type = input("Enter agent type (simple_agent or simple_agent_langgraph): ")
     
     if agent_type == "simple_agent_langgraph":
-        with SqliteSaver.from_conn_string(":memory:") as checkpointer:
+        with get_checkpointer() as checkpointer:
             agent = build_graph_agent(checkpointer)
             while True:
                 question = input("\nYour question (or 'quit' to exit): ")

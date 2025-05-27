@@ -1,4 +1,4 @@
-from langgraph_agent import get_thread_config
+from langgraph_agent_memory import get_thread_config
 
 def skills_query_graph(agent, question):
     # Format the question as a proper message state
