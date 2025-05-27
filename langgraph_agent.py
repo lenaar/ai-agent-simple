@@ -3,11 +3,16 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, END
+from langgraph_agent_tools import tools
 from typing import Annotated, TypedDict
 
 load_dotenv()
 
 openai = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEY"), model_name="gpt-4.1-nano", temperature=0.0)
+model_with_tools = openai.bind_tools(tools)
+
+response = model_with_tools.invoke([{"role": "user", "content": "What is the capital of France?"}])
+print(response)
 
 # state to keep messages
 class MessagesState(TypedDict):
@@ -23,9 +28,10 @@ def simple_agent_langgraph(state: MessagesState):
     """
     print(state["messages"])
 
-    return {"messages": [openai.invoke(state["messages"])]}
+    return {"messages": [model_with_tools.invoke(state["messages"])]}
 
-def build_graph():
+
+def build_graph_agent():
     # Initialize the graph
     graph = StateGraph(MessagesState)
     

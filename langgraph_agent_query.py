@@ -1,12 +1,6 @@
-import re
-from typing import Union, Dict
-from simple_agent_langgraph import build_graph
-from simple_agent_tools import known_skills
 
 def skills_query_graph(agent, question):
-    if question.lower() in ["quit", "exit", "bye", "goodbye"]:
-        print("Goodbye!")
-        return
+
         
     # Format the question as a proper message state
     messages_state = {
