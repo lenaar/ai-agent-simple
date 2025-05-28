@@ -1,4 +1,4 @@
-# AI Agent Simple
+# AI Agent Simple and LangGraph with a memory checkpoint
 
 A simple example of an AI agent that can understand natural language queries about planet masses and perform calculations in scientific notation, with additional support for real-time web search using LangChain and LangGraph.
 
@@ -6,7 +6,7 @@ A simple example of an AI agent that can understand natural language queries abo
 
 ### Planet Mass Calculations
 
-- Calculate combined masses of multiple planets
+- Calculate the combined masses of multiple planets
 - Handle scientific notation (e.g., 1.898e24)
 - Interactive command-line interface
 - Comprehensive test suite
@@ -176,7 +176,7 @@ python -m pytest tests/ -v
 
 ### Planet Mass Features
 
-- Added support for calculating masses of any number of planets
+- Added support for calculating the masses of any number of planets
 - Improved scientific notation handling
 - Enhanced error handling for unknown planets
 
