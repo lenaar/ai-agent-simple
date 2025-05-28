@@ -7,9 +7,9 @@ from langgraph_agent_query import skills_query_graph
 from langgraph_agent_memory import get_checkpointer
 
 def main():
-    agent_type = input("Enter agent type (simple_agent or simple_agent_langgraph): ")
+    agent_type = input("Enter agent type (simple_agent or agent_langgraph_with_memory): ")
     
-    if agent_type == "simple_agent_langgraph":
+    if agent_type == "agent_langgraph_with_memory":
         with get_checkpointer() as checkpointer:
             agent = build_graph_agent(checkpointer)
             while True:

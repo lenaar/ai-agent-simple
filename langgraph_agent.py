@@ -20,7 +20,7 @@ model_with_tools = openai.bind_tools(tools)
 class MessagesState(TypedDict):
     messages: Annotated[list, add_messages]
 
-def simple_agent_langgraph(state: MessagesState):
+def agent_langgraph_with_memory(state: MessagesState):
     """
     Example: state = {
     "messages": [
@@ -36,7 +36,7 @@ def simple_agent_langgraph(state: MessagesState):
 def build_graph_agent(checkpointer):
     # Initialize the graph
     graph = StateGraph(MessagesState)
-    graph.add_node("agent", simple_agent_langgraph)
+    graph.add_node("agent", agent_langgraph_with_memory)
 
 # Set the entry point - where the graph begins
     graph.set_entry_point("agent")
